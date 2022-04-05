@@ -15,7 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from demo import views as demoviews
+from profileapp import views as paviews
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+    path('',demoviews.home_view, name='home'),
+    path('login/',demoviews.login_view, name='login'),
+    path('signup/',demoviews.signup_view, name='signup'),
+    path('logout/',demoviews.logout_view, name='logout'),
+    path('profile/<str:email>',paviews.profile_view, name='profile'),
+    path('profile/newpost/<str:email>',paviews.newpost_view, name='newpost'),
+    path('profile/feed/<str:email>',paviews.feed_view, name='test'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
